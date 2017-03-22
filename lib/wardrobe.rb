@@ -6,10 +6,10 @@ class Wardrobe
   end
 
   def find_clothing(path_to_clothes)
-    Dir["#{path_to_clothes}/*.txt"].each do |file_name|
-      lines = File.readlines(file_name, encoding: 'utf-8').map { |line| line.chomp }
-      @clothing << Dress.new(lines[0], lines[1], lines[2])
+    @clothing = Dir["#{path_to_clothes}/*.txt"].collect do |file_name|
+      Dress.new(File.readlines(file_name, encoding: 'utf-8').map { |line| line.chomp })
     end
+
     raise 'Empty wardrobe! No clothes ;(' if @clothing.empty?
   rescue RuntimeError => error
     puts error.inspect
@@ -21,11 +21,11 @@ class Wardrobe
 
   def choose_clothing(clothing)
     collect_types(clothing).collect do |types|
-      (clothing.select { |item| types.include?(item.type) }).sample
+      clothing.select { |item| types.include?(item.type) }.sample
     end
   end
 
   def collect_types(clothing)
-    (clothing.collect { |item| item.type }).uniq
+    clothing.collect { |item| item.type }.uniq
   end
 end

@@ -1,10 +1,10 @@
 class Dress
   attr_reader :item, :type, :temperature
 
-  def initialize(item, type, temprerature)
-    @item = item
-    @type = type
-    @temperature = convert_to_range(temprerature)
+  def initialize(item_stats)
+    @item = item_stats[0]
+    @type = item_stats[1]
+    @temperature = convert_to_range(item_stats[2])
   end
 
   def warm?(temperature)

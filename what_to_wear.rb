@@ -1,6 +1,6 @@
 # name: "Что одеть?"
 # author: Shubin Pavlik
-# version: 1.1
+# version: 1.2
 #
 # ruby_version: 2.3
 # encoding: utf-8
