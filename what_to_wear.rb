@@ -1,36 +1,23 @@
 # name: "Что одеть?"
 # author: Shubin Pavlik
-# version: 1.0
+# version: 1.1
 #
 # ruby_version: 2.3
 # encoding: utf-8
 
-require_relative './lib/wardrobe.rb'
+require_relative './lib/wardrobe'
 
 files_path = File.dirname(__FILE__) + '/data/'
 
 wardrobe = Wardrobe.new
-wardrobe.find_clothing(files_path + '/clothing/')
+wardrobe.find_clothing(files_path + 'clothing')
 
-begin
-  puts File.readlines(files_path + 'question.txt', encoding: 'utf-8').sample
-rescue Exception => error
-  puts 'file read error'
-  puts error.message
-ensure
-  user_input = STDIN.gets.to_i
-end
+puts File.readlines(files_path + 'question.txt', encoding: 'utf-8').sample
+user_input = STDIN.gets.to_i
 
-begin
-  puts
-  puts File.readlines(files_path + 'invite.txt', encoding: 'utf-8').sample
-  sleep 1
-  puts
-rescue Exception => error
-  puts 'file read error'
-  puts error.message
-ensure
-  wardrobe.choose_clothes(wardrobe.sort_by_temp(user_input)).each do |dress|
-    puts "#{dress.item} (#{dress.type}) #{dress.temp}"
-  end
+puts "\n#{File.readlines(files_path + 'invite.txt', encoding: 'utf-8').sample}\n\n"
+sleep 1
+
+wardrobe.choose_clothing(wardrobe.select_warm_clothing(user_input)).each do |dress|
+  puts "#{dress.item} (#{dress.type}) #{dress.temperature}"
 end

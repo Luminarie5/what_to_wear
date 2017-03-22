@@ -1,17 +1,18 @@
 class Dress
-  attr_reader :item, :type, :temp
+  attr_reader :item, :type, :temperature
 
-  TEMP_MASK = /[\+\-\d]+/
-
-  def initialize(item, type, temp)
+  def initialize(item, type, temprerature)
     @item = item
     @type = type
-    @temp = to_range!(temp)
+    @temperature = convert_to_range(temprerature)
   end
 
-  def to_range!(temp)
-    t_min = temp.slice!(TEMP_MASK)
-    t_max = temp.slice!(TEMP_MASK)
+  def warm?(temperature)
+    @temperature.include?(temperature)
+  end
+
+  def convert_to_range(temperature)
+    t_min, t_max = *temperature.gsub(/[()]/, '').split(', ')
     Range.new(t_min.to_i, t_max.to_i)
   end
 end
